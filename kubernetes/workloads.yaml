@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue
+spec:
+  selector:
+    matchLabels:
+      app: queue
+  replicas: 1
+  template:  # Template for the POD
+    metadata:
+      labels:
+        app: queue
+    spec:
+      containers:
+        - name: queue
+          image: rmohr/activemq
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: position-simulator
+spec:
+  selector:
+    matchLabels:
+      app: position-simulator
+  replicas: 1
+  template:  # Template for the POD
+    metadata:
+      labels:
+        app: position-simulator
+    spec:
+      containers:
+        - name: position-simulator
+          image: neerajjain/vehicle-position-simulator
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: production-microservice
