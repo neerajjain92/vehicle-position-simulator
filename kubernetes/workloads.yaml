@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: position-simulator
-          image: neerajjain/vehicle-position-simulator
+          image: neerajjain/positionsimulator
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: production-microservice
