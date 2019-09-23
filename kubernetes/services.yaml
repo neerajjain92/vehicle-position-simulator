@@ -16,4 +16,29 @@ spec:
       port: 61616
 
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-database
+spec:
+  selector:
+    app: database
 
+  ports:
+    - name: endpoint
+      port: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-service
+spec:
+  selector:
+    app: tracker
+
+  ports:
+    - port: 8090
+      nodePort: 30030
+
+  type: NodePort

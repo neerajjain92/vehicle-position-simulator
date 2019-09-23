@@ -34,5 +34,44 @@ spec:
         - name: position-simulator
           image: neerajjain/positionsimulator
           env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: production-microservice
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  replicas: 1
+  template:  # Template for the POD
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: mongo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracker
+spec:
+  selector:
+    matchLabels:
+      app: tracker
+  replicas: 1
+  template: # template for the POD
+    metadata:
+      labels:
+        app: tracker
+    spec:
+      containers:
+        - name: tracker
+          image: neerajjain/vehicle-position-tracker
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
