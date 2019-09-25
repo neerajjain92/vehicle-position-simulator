@@ -75,3 +75,43 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka
+spec:
+  selector:
+    matchLabels:
+      app: eureka
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: eureka
+    spec:
+      containers:
+        - name: eureka
+          image: neerajjain/eureka
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  selector:
+    matchLabels:
+      app: gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: neerajjain/position-tracker-api-gateway
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+

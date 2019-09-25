@@ -39,6 +39,34 @@ spec:
 
   ports:
     - port: 8090
+
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-eureka-server
+spec:
+  selector:
+    app: eureka
+
+  ports:
+    - port: 8761
+      nodePort: 30040
+
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-api-gateway
+spec:
+  selector:
+    app: gateway
+
+  ports:
+    - port: 8080
+      name: http
       nodePort: 30030
 
   type: NodePort
