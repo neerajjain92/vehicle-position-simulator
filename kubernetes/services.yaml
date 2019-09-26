@@ -39,8 +39,9 @@ spec:
 
   ports:
     - port: 8090
+      nodePort: 30050
 
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: v1
 kind: Service
