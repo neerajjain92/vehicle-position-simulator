@@ -68,6 +68,19 @@ spec:
   ports:
     - port: 8080
       name: http
-      nodePort: 30030
 
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-webapp
+spec:
+  selector:
+    app: webapp
+
+  ports:
+    - port: 80
+      name: http
+      nodePort: 30080
   type: NodePort

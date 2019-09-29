@@ -114,4 +114,25 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: neerajjain/position-tracker-webapp
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
 
