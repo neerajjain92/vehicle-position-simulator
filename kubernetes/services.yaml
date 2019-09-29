@@ -68,8 +68,9 @@ spec:
   ports:
     - port: 8080
       name: http
+      nodePort: 30030
 
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: v1
 kind: Service

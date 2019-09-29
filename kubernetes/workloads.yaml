@@ -54,6 +54,14 @@ spec:
       containers:
         - name: database
           image: mongo
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-persistent-storage
+      volumes:
+        - name: mongo-persistent-storage
+          # Pointer to the configuration of How we want the mount to be implemented, So we are using Persistent Volume Claims.
+          persistentVolumeClaim:
+            claimName: mongo-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
