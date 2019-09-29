@@ -1,0 +1,15 @@
+version: '3'
+services:
+  eureka:
+    ports:
+    - "8761:8761"
+    image: neerajjain/eureka
+  queue:
+    ports:
+    - "61616:61616"
+    - "8161:8161"
+    image: rmohr/activemq
+  mongo:
+    ports:
+    - "27017:27017"
+    image: mongo
