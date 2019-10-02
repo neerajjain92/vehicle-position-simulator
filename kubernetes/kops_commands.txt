@@ -1,0 +1,17 @@
+// Name of the Cluster
+export NAME=positiontrackernj.k8s.local
+
+// S3 bucket
+export KOPS_STATE_STORE=s3://neeraj-position-tracker-state-storage
+
+// Create configuration for the cluster
+kops create cluster --zones ap-south-1a,ap-south-1b ${NAME}
+
+// Build the Cluster
+kops update cluster ${NAME} --yes
+
+Suggestions:
+ * list clusters with: kops get cluster
+ * edit this cluster with: kops edit cluster positiontrackernj.k8s.local
+ * edit your node instance group: kops edit ig --name=positiontrackernj.k8s.local nodes
+ * edit your master instance group: kops edit ig --name=positiontrackernj.k8s.local master-ap-south-1a
