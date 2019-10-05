@@ -24,7 +24,7 @@ import java.util.concurrent.Callable;
  */
 @Data
 @NoArgsConstructor
-public class Trip implements Callable<Object> {
+public class Trip implements Runnable {
 
     private static Logger TRIP_LOGGER = LoggerFactory.getLogger(Trip.class);
     private List<String> positions;
@@ -41,8 +41,7 @@ public class Trip implements Callable<Object> {
     }
 
     @Override
-    public Object call() throws Exception {
-
+    public void run() {
         while (true) { // Infinitely churning out vehicles geo-coordinates to the queue
             positions.forEach(position -> {
                 // To speed the vehicles up, we're going to drop some reports
