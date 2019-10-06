@@ -33,9 +33,26 @@ spec:
       containers:
         - name: position-simulator
           image: neerajjain/positionsimulator
+          volumeMounts:
+            - mountPath: /tmp/not-started
+              name: not-started-volume
+            - mountPath: /tmp/started
+              name: started-volume
+            - mountPath: /tmp/finished
+              name: finished-volume
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+      volumes:
+        - name: not-started-volume
+          hostPath:
+            path: /tmp/position_tracker/not-started
+        - name: started-volume
+          hostPath:
+            path: /tmp/position_tracker/started
+        - name: finished-volume
+          hostPath:
+            path: /tmp/position_tracker/finished
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -143,4 +160,28 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip-directions
+spec:
+  selector:
+    matchLabels:
+      app: trip-directions
+  template:
+    metadata:
+      labels:
+        app: trip-directions
+    spec:
+      containers:
+        - name: trip-directions
+          image: neerajjain/trip-directions
+          env:
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: trip-directions-api-key
+                  key: API_KEY
+
 

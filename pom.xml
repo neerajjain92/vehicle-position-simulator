@@ -112,8 +112,6 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>*.properties</include>
-                    <include>tracks/*</include>
-                    <include>trips/*</include>
                 </includes>
             </resource>
         </resources>

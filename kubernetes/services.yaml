@@ -85,3 +85,31 @@ spec:
       name: http
       nodePort: 30080
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-trip-directions
+spec:
+  selector:
+    app: trip-directions
+
+  ports:
+    - port: 9080
+      name: http
+      nodePort: 30090
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gps-tracker-trip-simulator
+spec:
+  selector:
+    app: position-simulator
+
+  ports:
+    - port: 9090
+      name: http
+      nodePort: 30095
+  type: NodePort

@@ -13,3 +13,15 @@ services:
     ports:
     - "27017:27017"
     image: mongo
+  simulator:
+    volumes:
+      - /tmp/position_tracker/not-started:/tmp/not-started
+      - /tmp/position_tracker/started:/tmp/started
+      - /tmp/position_tracker/finished:/tmp/finished
+    ports:
+    - "9090:9090"
+    image: positionsimulator
+  directions:
+    ports:
+    - "9080:9080"
+    image: neerajjain/trip-directions
