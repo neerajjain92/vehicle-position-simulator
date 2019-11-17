@@ -15,6 +15,10 @@ spec:
       containers:
         - name: queue
           image: rmohr/activemq
+          resources:
+            requests:
+              memory: 300Mi # 1Mi ==> 1024 Ki  |   1Ki ==>
+              cpu: 50m              # 1M  ==> 1000K    |   1K  ==> 1000 bytes
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,7 +36,7 @@ spec:
     spec:
       containers:
         - name: position-simulator
-          image: neerajjain/positionsimulator
+          image: neerajjain/positionsimulator:resource_tuned
           volumeMounts:
             - mountPath: /tmp/not-started
               name: not-started-volume
@@ -96,7 +100,7 @@ spec:
     spec:
       containers:
         - name: tracker
-          image: neerajjain/vehicle-position-tracker
+          image: neerajjain/positiontracker
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
@@ -135,10 +139,14 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: neerajjain/position-tracker-api-gateway
+          image: neerajjain/position_tracker_api_gateway:cpu_intensive_task-1
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+          resources:
+            requests:
+              memory: 200Mi # 1Mi ==> 1024 Ki  |   1Ki ==>              
+              cpu: 50m
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -183,5 +191,35 @@ spec:
                 secretKeyRef:
                   name: trip-directions-api-key
                   key: API_KEY
-
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: metrics-server
+#   namespace: kube-system
+#   labels:
+#     k8s-app: metrics-server
+# spec:
+#   selector:
+#     matchLabels:
+#       k8s-app: metrics-server
+#   template:
+#     metadata:
+#       name: metrics-server
+#       labels:
+#         k8s-app: metrics-server
+#     spec:
+#       serviceAccountName: metrics-server
+#       volumes:
+#       # mount in tmp so we can safely use from-scratch images and/or read-only containers
+#       - name: tmp-dir
+#         emptyDir: {}
+#       containers:
+#       - name: metrics-server
+#         image: k8s.gcr.io/metrics-server-amd64:v0.3.3
+#         args: [ "--kubelet-insecure-tls" ]
+#         imagePullPolicy: Always
+#         volumeMounts:
+#         - name: tmp-dir
+#           mountPath: /tmp
 

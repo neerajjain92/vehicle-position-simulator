@@ -8,4 +8,4 @@ RUN mkdir -p /tmp/not-started &&\
 
 ADD positionsimulator-0.0.1-SNAPSHOT.jar positionsimulator.jar
 
-CMD ["java", "-jar", "positionsimulator.jar"]
+CMD ["java", "-Xmx50m" , "-jar", "positionsimulator.jar"]
