@@ -143,6 +143,10 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: production-microservice
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
           resources:
             requests:
               memory: 200Mi # 1Mi ==> 1024 Ki  |   1Ki ==>              
