@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue
+spec:
+  selector:
+    matchLabels:
+      app: queue
+  replicas: 2
+  template:  # Template for the POD
+    metadata:
+      labels:
+        app: queue
+    spec:
+      containers:
+        - name: queue
+          image: rmohr/activemq
+          resources:
+            requests:
+              memory: 300Mi # 1Mi ==> 1024 Ki  |   1Ki ==>
+                            # 1M  ==> 1000K    |   1K  ==> 1000 bytes
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu:  100m
+---

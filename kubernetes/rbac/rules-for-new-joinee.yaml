@@ -1,0 +1,31 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: new-joinee
+  namespace: default
+rules:
+- apiGroups: ["", "apps", "autoscaling", "extensions"] # Blank means Core API group
+  resources: ["*"] # New Joinee can view pods,
+                                                # service but no deployments (if i give * in resources) 
+                                                # and the reason is since we create Deployment with apiVersion 
+                                                # as apps/v1 and not v1(which is COR API Group).
+  verbs: ["get", "list", "watch"]
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: assign_specific_user_or_users_to_new_joinee_role
+  namespace: default
+subjects:
+  # List users that are going into this role
+- kind: User
+  name: francis-linux-login
+- kind: User
+  name: Caleb
+roleRef:
+  kind: Role
+  name: new-joinee
+  apiGroup: rbac.authorization.k8s.io
+

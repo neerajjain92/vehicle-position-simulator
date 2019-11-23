@@ -44,9 +44,10 @@ spec:
               name: started-volume
             - mountPath: /tmp/finished
               name: finished-volume
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: production-microservice
+          envFrom:
+            - configMapRef:
+                name: spring-application-config
+
       volumes:
         - name: not-started-volume
           hostPath:
