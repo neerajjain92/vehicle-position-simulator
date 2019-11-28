@@ -1,0 +1,14 @@
+# from kubernetes version 1.14
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-unsecured-routing
+spec:
+  rules:
+    - host: neeraj.eats.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: gps-tracker-webapp
+              servicePort: 80
