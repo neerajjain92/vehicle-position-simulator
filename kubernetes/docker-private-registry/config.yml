@@ -1,0 +1,21 @@
+version: 0.1
+log:
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+storage:
+  inmemory:
+http:
+  addr: :5000
+  tls:
+    certificate: /certs/domain.crt
+    key: /certs/domain.key
+notifications:
+  endpoints:
+    - name: registry_event_listener_for_slack
+      disabled: false
+      url: http://host.docker.internal:9191/api/people
+      timeout: 15s
+      threshold: 5
+      backoff: 15s

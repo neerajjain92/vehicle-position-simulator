@@ -1,0 +1,57 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /people:
+    get:
+      operationId: "people.read"
+      tags:
+        - "People"
+      summary: "The people data structure supported by the server application"
+      description: "Read the list of people"
+      responses:
+        200:
+          description: "Successful read people list operation"
+          schema:
+            type: "array"
+            items:
+              properties:
+                fname:
+                  type: "string"
+                lname:
+                  type: "string"
+                timestamp:
+                  type: "string"
+    post:
+      operationId: "people.create"
+      tags:
+        - "People"
+      summary: "Create a person and add it to the list"
+      description: Create a new person in the person list
+      parameters:
+        - name: person
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              fname:
+                  type: "string"
+                  description: First name of the person being saved.
+              lname:
+                  type: "string"
+                  description: Last Name of the person to be saved.
+      responses:
+        201:
+          description: Successfully created person in the list.
