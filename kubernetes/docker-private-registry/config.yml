@@ -15,7 +15,7 @@ notifications:
   endpoints:
     - name: registry_event_listener_for_slack
       disabled: false
-      url: http://host.docker.internal:9191/api/people
+      url: http://host.docker.internal:9191/api/events
       timeout: 15s
       threshold: 5
       backoff: 15s

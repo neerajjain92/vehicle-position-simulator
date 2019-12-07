@@ -12,7 +12,7 @@ basePath: "/api"
 
 # Paths supported by the server application
 paths:
-  /people:
+  /events:
     get:
       operationId: "people.read"
       tags:
@@ -33,25 +33,18 @@ paths:
                 timestamp:
                   type: "string"
     post:
-      operationId: "people.create"
+      operationId: "notification_handler.handle"
       tags:
-        - "People"
-      summary: "Create a person and add it to the list"
-      description: Create a new person in the person list
+        - "Notification"
+      summary: "Create a notification when private registry sends any event."
+      description: Create a notification when private registry sends any event.
       parameters:
-        - name: person
+        - name: notification
           in: body
-          description: Person to create
+          description: Notification
           required: True
           schema:
             type: object
-            properties:
-              fname:
-                  type: "string"
-                  description: First name of the person being saved.
-              lname:
-                  type: "string"
-                  description: Last Name of the person to be saved.
       responses:
         201:
-          description: Successfully created person in the list.
+          description: Successfully created notifications.
